@@ -1,4 +1,4 @@
-.PHONY: all vet test build package clean dep
+.PHONY: all vet test build package clean dep docker
 
 APP_NAME=hello-world
 APP_VERSION=0.1
@@ -12,7 +12,7 @@ BINARY_NAME=$(APP_NAME)
 all: clean dep build package
 
 dep:
-	@dep ensure && dep prune
+	dep ensure && dep prune
 
 vet:
 	@go vet 
@@ -33,3 +33,7 @@ package:
 
 clean:
 	rm -Rf $(BUILD_DIR)
+	
+docker: build package
+	cp $(BUILD_DIR)/$(BINARY_NAME)-$(APP_VERSION)-linux-amd64.tar.gz /opt
+	cp $(BUILD_DIR)/$(BINARY_NAME)-linux-amd64 /opt
