@@ -4,16 +4,12 @@ FROM docker-gobuild
 ARG project_name
 ARG project_owner=jensskott
 
-# Set run environment variables
-ENV SOURCE_PATH=/work/src/github.com/${project_owner}/${project_name}
-ENV CMD="make docker"
-
 # Make source path for golang
-RUN mkdir -p ${SOURCE_PATH}
-WORKDIR ${SOURCE_PATH}
+RUN mkdir -p /work/src/github.com/${project_owner}/${project_name}
+WORKDIR /work/src/github.com/${project_owner}/${project_name}
 
 # Add sources to workdir
 ADD . .
 
 # Run command
-CMD ${CMD}
+CMD ["make build"]
